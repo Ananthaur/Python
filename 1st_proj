@@ -1,0 +1,30 @@
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+
+# Features: [weight, texture]
+X = np.array([[120, 1], [150, 0], [130, 1], [140, 1], [160, 0], [170, 0]])
+
+# Labels: 0 for apple, 1 for orange
+y = np.array([0, 1, 0, 0, 1, 1])
+
+# Train-test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Model training
+clf = KNeighborsClassifier(n_neighbors=3)
+clf.fit(X_train, y_train)
+
+# Prediction and evaluation
+y_pred = clf.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+print("Accuracy:", accuracy)
+
+# Prediction with new data
+new_fruit = np.array([[145, 0]])  # New fruit with weight 145 and bumpy texture
+prediction = clf.predict(new_fruit)
+if prediction == 0:
+    print("It's an apple!")
+else:
+    print("It's an orange!")
